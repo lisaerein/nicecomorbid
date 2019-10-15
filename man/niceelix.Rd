@@ -4,7 +4,7 @@
 \alias{niceelix}
 \title{Lisa's Elixhauser comobidity score calculator}
 \usage{
-niceelix(df, score = "mortality", aids = "cm_aids",
+niceelix(df, score = "mortality", imputeNA = FALSE, aids = "cm_aids",
   alcohol = "cm_alcohol", anemdef = "cm_anemdef", arth = "cm_arth",
   bldloss = "cm_bldloss", chf = "cm_chf", chrnlung = "cm_chrnlung",
   coag = "cm_coag", depress = "cm_depress", dm = "cm_dm",
@@ -20,6 +20,8 @@ niceelix(df, score = "mortality", aids = "cm_aids",
 \item{df}{Dataframe [REQUIRED].}
 
 \item{score}{Character. Name of Elixhauser score to calculate ("mortality" or "readmission"). Default is "mortality".}
+
+\item{imputeNA}{Logical. Should missing values be imputed as 0? Default is FALSE.}
 
 \item{aids}{Character. Name of comorbidity indicator variable in dataframe.}
 

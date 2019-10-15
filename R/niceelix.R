@@ -5,6 +5,7 @@
 #' This function outputs a numeric vector of scores.
 #' @param df Dataframe [REQUIRED].
 #' @param score Character. Name of Elixhauser score to calculate ("mortality" or "readmission"). Default is "mortality".
+#' @param imputeNA Logical. Should missing values be imputed as 0? Default is FALSE.
 #' @param aids Character. Name of comorbidity indicator variable in dataframe.   
 #' @param alcohol Character. Name of comorbidity indicator variable in dataframe.    
 #' @param anemdef Character. Name of comorbidity indicator variable in dataframe.   
@@ -38,6 +39,7 @@
 #' @export
 niceelix <- function(df
                     ,score = "mortality"
+                    ,imputeNA = FALSE
                     
                     ,aids     = "cm_aids" 
                     ,alcohol  = "cm_alcohol"   
@@ -165,10 +167,12 @@ niceelix <- function(df
       
       emat <- matrix(NA, ncol = length(evars), nrow = nrow(df)) 
       if (score == "readmission"){
+            if (imputeNA) df[is.na(df[,evars[i]]), evars[i]] <- 0
             for (i in 1:length(evars)) emat[,i] <- df[,evars[i]]*eval(as.symbol(paste("erw",evars[i], sep="_")))
             myscore <- rowSums(emat)
       }
       if (score == "mortality"){
+         if (imputeNA) df[is.na(df[,evars[i]]), evars[i]] <- 0
             for (i in 1:length(evars)) emat[,i] <- df[,evars[i]]*eval(as.symbol(paste("emw",evars[i], sep="_")))
             myscore <- rowSums(emat)
       }
